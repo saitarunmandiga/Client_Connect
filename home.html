@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Connect App</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #0e15d7;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #1663e9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #172ad6;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Client Connect</h1>
+    </header>
+
+    <main>
+        <!-- Client Connection Form -->
+        <h2>Client Connection</h2>
+        <form id="clientConnectForm">
+            <label for="clientName">Client Name:</label>
+            <input type="text" id="clientName" name="clientName" required>
+
+            <label for="clientEmail">Client Email:</label>
+            <input type="email" id="clientEmail" name="clientEmail" required>
+
+            <button type="submit">Connect</button>
+        </form>
+
+        <!-- Contact Us Form -->
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </main>
+    <script>
+        // JavaScript for Client Connection Form
+        document.getElementById("clientConnectForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Get form data
+            const clientName = document.getElementById("clientName").value;
+            const clientEmail = document.getElementById("clientEmail").value;
+    
+            // Create a data object for client connection (you can customize this)
+            const clientData = {
+                name: clientName,
+                email: clientEmail
+            };
+    
+            // Send the client connection data to the server (replace with your endpoint)
+            // Example: fetch("https://yourserver.com/connect-client", {
+            // Adjust the URL and HTTP method as needed (POST, GET, etc.)
+            // headers: {
+            //     "Content-Type": "application/json"
+            // },
+            // body: JSON.stringify(clientData)
+            // })
+            // .then(response => {
+            //     if (response.ok) {
+            //         alert("Client connected successfully!");
+            //     } else {
+            //         alert("Client connection failed. Please try again later.");
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error("Error:", error);
+            //     alert("An error occurred. Please try again later.");
+            // });
+    
+            // For demonstration purposes, display a message
+            alert("Client connected successfully!");
+        });
+    
+        // JavaScript for Contact Us Form
+        document.getElementById("contactForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Get form data
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+    
+            // Create a data object for the contact form
+            const contactData = {
+                name: name,
+                email: email,
+                message: message
+            };
+    
+            // Send the contact form data to the server (replace with your endpoint)
+            // Example: fetch("https://yourserver.com/contact", {
+            // Adjust the URL and HTTP method as needed (POST, GET, etc.)
+            // headers: {
+            //     "Content-Type": "application/json"
+            // },
+            // body: JSON.stringify(contactData)
+            // })
+            // .then(response => {
+            //     if (response.ok) {
+            //         alert("Message sent successfully!");
+            //     } else {
+            //         alert("Message could not be sent. Please try again later.");
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error("Error:", error);
+            //     alert("An error occurred. Please try again later.");
+            // });
+    
+            // For demonstration purposes, display a message
+            alert("Message sent successfully!");
+        });
+    </script>
+    
