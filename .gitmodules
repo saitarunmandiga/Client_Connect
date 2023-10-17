@@ -1,0 +1,3 @@
+[submodule "my-clientconnect-frontend"]
+	path = my-clientconnect-frontend
+	url = https://github.com/saitarunmandiga/Client_Connect
