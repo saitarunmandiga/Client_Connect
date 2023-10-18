@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Connect App</title>
+    <style>
+        /* Basic styles for navigation and background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 100% 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 0;
+            text-align: center; /* Center-align the page title */
+        }
+
+        nav h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Styling for the live chat and contact sections */
+        .live-chat {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 50px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .contact-us {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 100px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        /* Message input and display */
+        .message-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .message-display {
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+         /* Styles for buttons */
+         .button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .send-button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Client Connect App</h1>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+        </ul>
+    </nav>
+    <div class="button-container">
+        <a href="signin.html" class="button">Sign In</a>
+        <a href="login.html" class="button">Login</a>
+    </div>
+
+    <div class="live-chat">
+        <h2>Live Chat</h2>
+        <div class="message-display" id="message-display">
+            <!-- Messages will be displayed here -->
+        </div>
+        <input type="text" class="message-input" id="message-input" placeholder="Type your message here...">
+        <button class="send-button" id="send-button">Send</button> <!-- Added the Send button -->
+    </div>
+
+    <div class="contact-us">
+        <h2>Contact Us</h2>
+        <ul>
+            <li>Dwaraka Kavyasudha - (11685863) </li>
+            <li> Sesa Sowmya - (11702508) </li>
+            <li>Mandiga Sahasra Sai Tarun - (11721563)</li>
+            <li> Chittem Giridhara Srikar - (11703343)  </li>
+            <li>Sushma chowdary Aari-(11713230)</li>
+            <li>Sahithi Vidiyala – (11717331) </li>
+            <li>Kollu Charitha – (11712570)</li>
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2023 Client Connect App. All rights reserved.
+    </footer>
+
+    <script>
+        const messageInput = document.getElementById('message-input');
+        const messageDisplay = document.getElementById('message-display');
+        const sendButton = document.getElementById('send-button');
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value;
+            if (message.trim() !== '') {
+                const messageElement = document.createElement('div');
+                messageElement.innerText = message;
+                messageDisplay.appendChild(messageElement);
+                messageInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

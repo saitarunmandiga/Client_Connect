@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (head content) ... -->
+    <style>
+        /* Global styles can be added here */
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background: linear-gradient(-45deg, #f06, #f90, #ff0, #0f6, #06f, #90f, #f06);
+          background-size: 100% 600%; /* Adjust the background-size for the desired gradient height */
+          animation: rainbow 10s linear infinite;
+      }
+
+      @keyframes rainbow {
+          0%, 100% {
+              background-position: 0% 0%;
+          }
+          50% {
+              background-position: 0% 100%;
+          }
+      }
+
+      header {
+          background-color: #333;
+          color: #fff;
+          padding: 1rem;
+          text-align: center;
+      }
+
+      /* Navigation bar style with a separate background color */
+      nav {
+          background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background for the navigation bar */
+      }
+
+      nav ul {
+          list-style-type: none;
+          display: flex;
+          justify-content: center;
+          padding: 1rem 0; /* Add some padding to the top and bottom */
+          margin: 0;
+      }
+
+      nav li {
+          margin: 0 1rem;
+      }
+
+      nav a {
+          text-decoration: none;
+          color: #fff;
+      }
+    
+      main {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        /* Style for the live chat */
+        #live-chat {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Profile</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="services.html">Services</a></li>
+        </ul>
+    </nav>
+    <main>
+        <button id="fetch-profile">Fetch Profile</button>
+        <div id="profile-data">
+            <!-- User profile information goes here -->
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fetchProfileButton = document.getElementById('fetch-profile');
+            const profileData = document.getElementById('profile-data');
+
+            // Function to fetch profile data
+            const fetchProfileData = async () => {
+                try {
+                    // Send a GET request to the profile endpoint
+                    const response = await fetch('/api/profile', {
+                        method: 'GET',
+                        headers: {
+                            Authorization: localStorage.getItem('sessionToken'), // Include the session token in the headers
+                        },
+                    });
+
+                    if (response.status === 200) {
+                        const user = await response.json();
+                        // Display user profile data
+                        profileData.innerHTML = `
+                            <h2>Name: ${user.name}</h2>
+                            <h2>Email: ${user.email}</h2>
+                        `;
+                    } else {
+                        profileData.innerHTML = 'Unauthorized';
+                    }
+                } catch (error) {
+                    console.error('An error occurred while fetching profile data:', error);
+                    profileData.innerHTML = 'Error fetching profile data';
+                }
+            };
+
+            fetchProfileButton.addEventListener('click', fetchProfileData);
+        });
+    </script>
+</body>
+</html>

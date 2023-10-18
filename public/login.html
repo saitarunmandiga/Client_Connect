@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Client Connect App</title>
+    <style>
+        /* Basic styles for background (similar to the dashboard) */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 100% 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Style the form inputs and labels */
+        form {
+            background-color: rgba(255, 255, 255, 0.8); /* Add a white background to the form */
+            padding: 20px; /* Add padding to the form */
+            border-radius: 5px; /* Add rounded corners to the form */
+            display: inline-block; /* Center the form horizontally */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        a.login {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a.signup {
+            display: inline-block;
+            background-color: #4287f5; /* Blue color for Signup button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        /* Center the form on the page */
+        form {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <form>
+            <header>
+                <h1>Login to Your Account</h1><br>
+            </header>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <a class="login" href="dashboard.html">Login</a> <!-- Redirect to dashboard on login -->
+            <a class="signup" href="signup.html">Signup</a> <!-- Redirect to signup.html on signup -->
+        </form>
+    </main>
+</body>
+</html>

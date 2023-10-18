@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Connect Dashboard</title>
+    <style>
+        /* Basic styles for navigation and background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 100% 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Dashboard content styles */
+        .container {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .welcome {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .about-app {
+            margin-bottom: 20px;
+        }
+
+        .tasks {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .task-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .add-task {
+            margin-top: 20px;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Client Connect Dashboard</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="welcome">
+            <p>Welcome, [Username]!</p>
+        </div>
+
+        <div class="about-app">
+            <h2>About the App</h2>
+            <p>This is the Client Connect App Dashboard. It allows you to manage tasks and stay connected with your clients.</p>
+        </div>
+
+        <div class="tasks">
+            <h2>Your Tasks</h2>
+            <div id="task-list">
+                <!-- Task items will be added here -->
+            </div>
+            <div class="add-task">
+                <input type="text" id="newTask" placeholder="Add a new task">
+                <input type="text" id="taskCategory" placeholder="Category">
+                <input type="text" id="taskDueDate" placeholder="Due Date">
+                <input type="text" id="taskPriority" placeholder="Priority">
+                <button id="addTask">Add</button>
+            </div>
+        </div>
+
+        <!-- Dark mode toggle -->
+        <label for="darkModeToggle">Dark Mode</label>
+        <input type="checkbox" id="darkModeToggle">
+
+        <!-- Task history button -->
+        <button id="taskHistoryButton">Task History</button>
+    </div>
+
+    <footer>
+        &copy; 2023 Client Connect App. All rights reserved.
+    </footer>
+
+    <script>
+        const addTaskButton = document.getElementById('addTask');
+        const taskList = document.getElementById('task-list');
+        const newTaskInput = document.getElementById('newTask');
+        const taskCategoryInput = document.getElementById('taskCategory');
+        const taskDueDateInput = document.getElementById('taskDueDate');
+        const taskPriorityInput = document.getElementById('taskPriority');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const taskHistoryButton = document.getElementById('taskHistoryButton');
+
+        let taskCounter = 1;
+
+        addTaskButton.addEventListener('click', () => {
+            const taskText = newTaskInput.value.trim();
+            if (taskText !== '') {
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `
+                    <input type="checkbox" id="task${taskCounter}">
+                    <label for="task${taskCounter}">Task ${taskCounter}: ${taskText}</label>
+                    <span class="task-category">${taskCategoryInput.value}</span>
+                    <span class="task-due-date">${taskDueDateInput.value}</span>
+                    <span class="task-priority">${taskPriorityInput.value}</span>
+                `;
+                taskList.appendChild(taskItem);
+                newTaskInput.value = '';
+                taskCategoryInput.value = '';
+                taskDueDateInput.value = '';
+                taskPriorityInput.value = '';
+                taskCounter++;
+            }
+        });
+
+        // Dark mode toggle
+        darkModeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode', darkModeToggle.checked);
+        });
+
+        // Task history button (opens a modal or displays a history section)
+        taskHistoryButton.addEventListener('click', () => {
+            // Implement the task history functionality here
+            // You can display a modal or a section with task history.
+        });
+    </script>
+</body>
+</html>
