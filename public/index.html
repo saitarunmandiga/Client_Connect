@@ -103,21 +103,86 @@
             text-align: center;
             padding: 10px 0;
         }
+        .calendar-container {
+            text-align: center;
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); /* 7 days in a week */
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .calendar-nav button {
+            margin: 0 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Add to your existing <style> tag */
+.holiday {
+    background-color: green;
+    color: white;
+}
+
+/* Tooltip styling */
+.calendar-day {
+    position: relative;
+}
+
+.calendar-day:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+        
+   
     </style>
 </head>
 <body>
     <nav>
         <h1>Client Connect App</h1>
         <ul>
+            
             <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="signup.html">Signup</a></li>
+            
         </ul>
     </nav>
     <div class="button-container">
-        <a href="signin.html" class="button">Sign In</a>
+        <a href="signup.html" class="button">Sign up</a>
         <a href="login.html" class="button">Login</a>
     </div>
 
@@ -128,7 +193,19 @@
         </div>
         <input type="text" class="message-input" id="message-input" placeholder="Type your message here...">
         <button class="send-button" id="send-button">Send</button> <!-- Added the Send button -->
+        
+        <div class="calendar-container">
+    <div class="calendar-nav">
+        <button id="prev-month">&lt; Prev</button>
+        <h2 id="calendar-month">Calendar</h2>
+        <button id="next-month">Next &gt;</button>
     </div>
+    <div id="calendar"></div>
+</div>
+
+</div>
+
+  
 
     <div class="contact-us">
         <h2>Contact Us</h2>
@@ -161,6 +238,77 @@
                 messageInput.value = '';
             }
         });
+        // Calendar functionality with holiday highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const calendar = document.getElementById('calendar');
+        const calendarMonth = document.getElementById('calendar-month');
+
+        // Example holiday list (YYYY-MM-DD format)
+        const holidays = {
+            '2023-01-01': 'New Year\'s Day',
+            '2023-12-25': 'Christmas Day'
+            // Add more holidays as needed
+        };
+
+        function loadCalendarMonth(month, year) {
+            calendar.innerHTML = ''; // Clear the previous calendar
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const firstDayOfWeek = firstDayOfMonth.getDay(); // Day of week, 0 is Sunday
+            const daysInMonth = lastDayOfMonth.getDate();
+
+            calendarMonth.textContent = `${monthNames[month]} ${year}`;
+
+            // Fill in the blanks for days of the week before the first of the month
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                calendar.appendChild(document.createElement('div'));
+            }
+
+            // Fill in the days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cell = document.createElement('div');
+                cell.className = 'calendar-day';
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                cell.textContent = day;
+
+                // Check if the day is a holiday
+                if (holidays[dateStr]) {
+                    cell.classList.add('holiday');
+                    cell.title = holidays[dateStr]; // Tooltip for the holiday name
+                }
+
+                calendar.appendChild(cell);
+            }
+        }
+
+        // Load the current month calendar
+        loadCalendarMonth(currentMonth, currentYear);
+
+        // Event listeners for navigation buttons
+        document.getElementById('prev-month').addEventListener('click', () => {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            loadCalendarMonth(currentMonth, currentYear);
+        });
+
+        document.getElementById('next-month').addEventListener('click', () => {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            loadCalendarMonth(currentMonth, currentYear);
+        });
+    });
     </script>
 </body>
 </html>

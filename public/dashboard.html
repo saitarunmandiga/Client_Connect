@@ -98,18 +98,45 @@
         <h1>Client Connect Dashboard</h1>
     </header>
 
+    <!-- New section for displaying pending tasks -->
+    <div id="pendingTasks" style="position: fixed; top: 50px; left: 20px; color: #ee630c; font-weight:1000;">
+        Pending Tasks: <span id="pendingTasksCount">0</span>
+    </div>
+    <div id="fileCount" style="position: fixed; top: 20px; left: 20px; color: #007bff; font-weight: bold;">
+        Files Selected: <span id="fileCountNumber">0</span>
+    </div>
+
+    <div id="userProfile" style="position: fixed; top: 20px; right: 150px;">
+        <img id="userImage" src="image.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%;">
+        <span id="userName">[Username]</span>
+    </div>
+
     <nav>
         <ul>
-            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="index.html">Home</a></li>
+            
             <li><a href="services.html">Services</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
+            
         </ul>
     </nav>
 
     <div class="container">
         <div class="welcome">
             <p>Welcome, [Username]!</p>
+        </div>
+
+        <div id="fileUploadSection" style="margin-top: 20px;">
+            <h2>Upload Documents</h2>
+            <form id="fileUploadForm">
+                <!-- Hidden file input -->
+                <input type="file" id="fileInput" name="files" multiple style="display: none;" onchange="enableUploadButton()">
+                <!-- Button that triggers the file input click event -->
+                <button type="button" id="selectFilesButton" onclick="document.getElementById('fileInput').click()">Select Files</button>
+                <!-- Initially disabled upload button -->
+                <button type="submit" id="uploadButton" disabled>Upload Files</button>
+            </form>
         </div>
 
         <div class="about-app">
@@ -152,9 +179,26 @@
         const taskPriorityInput = document.getElementById('taskPriority');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const taskHistoryButton = document.getElementById('taskHistoryButton');
-
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const fileUploadForm = document.getElementById('fileUploadForm');
+    
+        let pendingTasksCount = 0;
         let taskCounter = 1;
-
+    
+        // Function to update the pending tasks count
+        function updatePendingTasksCount(change) {
+            pendingTasksCount += change;
+            document.getElementById('pendingTasksCount').textContent = pendingTasksCount;
+        }
+    
+        // Function to update the file count display
+        function updateFileCount() {
+            const fileCountElement = document.getElementById('fileCountNumber');
+            const numberOfTasks = document.querySelectorAll('#task-list .task-item').length;
+            fileCountElement.textContent = numberOfTasks;
+        }
+    
         addTaskButton.addEventListener('click', () => {
             const taskText = newTaskInput.value.trim();
             if (taskText !== '') {
@@ -173,19 +217,72 @@
                 taskDueDateInput.value = '';
                 taskPriorityInput.value = '';
                 taskCounter++;
+                updatePendingTasksCount(1);
+                updateFileCount();
             }
         });
-
+    
         // Dark mode toggle
         darkModeToggle.addEventListener('change', () => {
             document.body.classList.toggle('dark-mode', darkModeToggle.checked);
         });
-
+    
         // Task history button (opens a modal or displays a history section)
         taskHistoryButton.addEventListener('click', () => {
             // Implement the task history functionality here
-            // You can display a modal or a section with task history.
+        });
+    
+        // Function to add a file to the task list when it's selected
+        function addFileToTaskList(file) {
+            const taskItem = document.createElement('div');
+            taskItem.className = 'task-item';
+            taskItem.innerHTML = `
+                <input type="checkbox" id="task-${file.name}">
+                <label for="task-${file.name}">${file.name}</label>
+                <span class="task-status pending">Pending Upload...</span>
+            `;
+            taskList.appendChild(taskItem);
+        }
+    
+        // Function to enable the upload button if files are selected
+        function enableUploadButton() {
+            uploadButton.disabled = fileInput.files.length === 0;
+        }
+    
+        fileInput.addEventListener('change', function() {
+            const files = fileInput.files;
+            for (const file of files) {
+                addFileToTaskList(file);
+            }
+            enableUploadButton();
+            updateFileCount();
+        });
+    
+        fileUploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const files = fileInput.files;
+            
+            for (const file of files) {
+                formData.append('files[]', file);
+            }
+    
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                fileInput.value = ''; // Clear the file input
+                uploadButton.disabled = true; // Disable the upload button
+                updateFileCount();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         });
     </script>
+    
 </body>
 </html>
